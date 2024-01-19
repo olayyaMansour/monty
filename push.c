@@ -1,8 +1,11 @@
 #include "monty.h"
+#include <stdio.h>
 void push(stack_t **stack, unsigned int line_number)
 {
 	char *token;
 	int value;
+	stack_t *new_node;
+
 	token = strtok(NULL, " \t\n");
 	if (token == NULL || !isdigit(*token))
 	{
@@ -10,7 +13,8 @@ void push(stack_t **stack, unsigned int line_number)
 		exit(EXIT_FAILURE);
 	}
 	value = atoi(token);
-	stack_t *new_node = malloc(sizeof(stack_t));
+
+	new_node = malloc(sizeof(stack_t));
 	if (new_node == NULL)
 	{
 		fprintf(stderr, "Error: malloc failed\n");
