@@ -1,4 +1,5 @@
 #include "monty.h"
+#include <stdio.h>
 /**
  * push - Pushes an element onto the stack
  * @stack: Pointer to the stack
@@ -6,37 +7,29 @@
  */
 void push(stack_t **stack, unsigned int line_number)
 {
-	int value, index = 0;
+	char *token;
+	int value;
+	stack_t *new_node;
 
-	if (!bus.arg)
+	token = strtok(NULL, " \t\n");
+	if (token == NULL || !isdigit(*token))
 	{
 		fprintf(stderr, "L%d: usage: push integer\n", line_number);
-		fclose(bus.file);
-		free(bus.content);
-		free_stack(*stack);
 		exit(EXIT_FAILURE);
 	}
+	value = atoi(token);
 
-	if (bus.arg[0] == '-')
-		index++;
-
-	while (bus.arg[index] != '\0')
+	new_node = malloc(sizeof(stack_t));
+	if (new_node == NULL)
 	{
-		if (bus.arg[index] < '0' || bus.arg[index] > '9')
-		{
-			fprintf(stderr, "L%d: usage: push integer\n", line_number);
-			fclose(bus.file);
-			free(bus.content);
-			free_stack(*stack);
-			exit(EXIT_FAILURE);
-		}
-		index++;
+		fprintf(stderr, "Error: malloc failed\n");
+		exit(EXIT_FAILURE);
 	}
-
-	value = atoi(bus.arg);
-	if (bus.lifo == 0)
-		add_node_to_stack(stack, value);
-	else
-		add_node_to_queue(stack, value);
+	new_node->n = value;
+	new_node->prev = NULL;
+	if (*stack != NULL)
+		(*stack)->prev = new_node;
+	new_node->next = *stack;
+	*stack = new_node;
 }
 
