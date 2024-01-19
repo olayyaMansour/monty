@@ -36,9 +36,6 @@ int main(int argc, char *argv[])
 	{
 		line_number++;
 		opcode = strtok(line, " \t\n");
-		if (strcmp(opcode, "nop") == 0)
-			op_func = nop;
-	}
 		if (opcode == NULL)
 			continue;
 		op_func = NULL;
