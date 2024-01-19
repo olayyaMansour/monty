@@ -1,5 +1,10 @@
 #include "monty.h"
 #include <stdio.h>
+/**
+ * push - Pushes an element onto the stack
+ * @stack: Pointer to the stack
+ * @line_number: Line number in the Monty bytecode file
+ */
 void push(stack_t **stack, unsigned int line_number)
 {
 	char *token;
